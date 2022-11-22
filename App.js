@@ -5,7 +5,6 @@
  * @format
  * @flow strict-local
  */
-
 import React from 'react';
 import {
   SafeAreaView,
@@ -24,74 +23,89 @@ import {
   LearnMoreLinks,
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
+import SectionArea from './src/components/SectionArea';
+import SearchBar from './src/components/SearchBar';
+import TestScreen from './src/components/TestScreen';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import DashboardScreen from './src/components/DashboardScreen';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {createDrawerNavigator} from '@react-navigation/drawer';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
  * LTI update could not be added via codemod */
-const Section = ({children, title}) => {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-};
+
+const Stack = createNativeStackNavigator();
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    flex: 1,
+    marginTop: 50,
+  };
+
+  const Drawer = createDrawerNavigator();
+
+  const DashboardDrawer = () => {
+    return (
+      <Drawer.Navigator useLegacyImplementation>
+        <Drawer.Screen
+          name="DashboardScreen"
+          component={DashboardScreen}
+          options={{headerShown: true}}
+        />
+      </Drawer.Navigator>
+    );
+  };
+
+  const Tab = createBottomTabNavigator();
+
+  const DashboardTab = () => {
+    return (
+      <Tab.Navigator
+        screenOptions={({route}) => ({
+          tabBarIcon: ({focused, color, size}) => {
+            let iconName;
+            if (route.name === 'Dashboard Drawer') {
+              iconName = focused ? 'view-dashboard' : 'view-dashboard-outline';
+            }
+            return (
+              <MaterialCommunityIcons
+                name={iconName}
+                size={size}
+                color={color}
+              />
+            );
+          },
+          tabBarActiveTintColor: 'tomato',
+          tabBarInactiveTintColor: 'gray',
+        })}>
+        <Tab.Screen name="Dashboard Drawer" component={DashboardScreen} />
+
+        {/* <Tab.Screen name="Dashboard Drawer" component={DashboardDrawer} /> */}
+      </Tab.Navigator>
+    );
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> Testing.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="DashboardTab">
+        <Stack.Screen name="DashboardTab" component={DashboardTab} />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
+
+// eslint-disable-next-line no-lone-blocks
+{
+  /* <StatusBar
+          barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+          backgroundColor={backgroundStyle.backgroundColor}
+        /> */
+}
 
 const styles = StyleSheet.create({
   sectionContainer: {

@@ -1,4 +1,6 @@
 apply plugin: "com.android.application"
+apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
 
 import com.android.build.OutputFile
 import org.apache.tools.ant.taskdefs.condition.Os
@@ -81,6 +83,14 @@ import org.apache.tools.ant.taskdefs.condition.Os
 project.ext.react = [
     enableHermes: true,  // clean and rebuild if changing
 ]
+
+// To customize the font files being copied, add the following instead
+//project.ext.vectoricons = [
+//        iconFontNames: ['AntDesign.ttf', 'EvilIcons.ttf', 'MaterialIcons.ttf', 'FontAwesome.ttf', 'Fontisto.ttf',
+//                        'FontAwesome5_Regular.ttf', 'Foundation.ttf', 'MaterialIcons.ttf', 'SimpleLineIcons.ttf', 'Zocial.ttf'] // Name of the font files you want to copy
+//]
+//apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
+
 
 apply from: "../../node_modules/react-native/react.gradle"
 

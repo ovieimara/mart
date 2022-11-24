@@ -29,12 +29,12 @@ const styles = StyleSheet.create({
   // },
 
   header_safe_area: {
-    zIndex: 100,
+    zIndex: 1000,
   },
 
   header: {
     height: 50,
-    // paddingHorizontal: 16,
+    paddingHorizontal: 16,
   },
 
   header_inner: {
@@ -62,10 +62,10 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     backgroundColor: 'white',
-    width: width,
+    width: width - 30,
   },
   back_icon_box: {
-    width: 20,
+    width: 40,
     // height: 40,
     borderRadius: 40,
     flexDirection: 'row',
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: '#ffffff',
     borderRadius: 16,
-    paddingHorizontal: 16,
+    paddingHorizontal: 10,
     fontSize: 15,
   },
 
@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
     position: 'absolute',
     left: 0,
     bottom: 0,
-    // zIndex: 999,
+    paddingHorizontal: 16,
+    zIndex: 999,
   },
   content_safe_area: {
     flex: 1,
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   },
   content_inner: {
     flex: 1,
-    paddingTop: 50,
+    paddingTop: width - 100,
   },
   separator: {
     marginTop: 5,
@@ -126,12 +127,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderBottomColor: '#e6e4eb',
     marginLeft: 16,
+    //paddingTop: 300,
   },
   item_icon: {
-    marginLeft: 15,
+    marginRight: 15,
   },
-  fake_post: {
-    backgroundColor: '#e4e6eb',
+  fake_result: {
+    // color: '#e4e6eb',
   },
 });
 

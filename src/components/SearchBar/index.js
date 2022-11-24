@@ -27,7 +27,7 @@ const SearchBar = () => {
 
   const input_box_translate_x = useRef(new Animated.Value(width)).current;
   const back_button_opacity = useRef(new Animated.Value(0)).current;
-  const content_translate_y = useRef(new Animated.Value(0)).current;
+  const content_translate_y = useRef(new Animated.Value(height)).current;
   const content_opacity = useRef(new Animated.Value(0)).current;
   const content_zIndex = useRef(new Animated.Value(0)).current;
   //   const [back_button_opacity, setBackButtonOpacity] = useState(new Value(0));
@@ -58,7 +58,7 @@ const SearchBar = () => {
 
     const content_translate_y_config = {
       duration: 0,
-      toValue: height,
+      toValue: 0,
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease),
     };
@@ -83,7 +83,7 @@ const SearchBar = () => {
     timing(back_button_opacity, back_button_opacity_config).start();
     timing(content_translate_y, content_translate_y_config).start();
     timing(content_opacity, content_opacity_config).start();
-    timing(content_zIndex, content_zIndex_config).start();
+    //timing(content_zIndex, content_zIndex_config).start();
 
     // force focus
     input.current.focus();
@@ -118,14 +118,33 @@ const SearchBar = () => {
       useNativeDriver: true,
       easing: Easing.inOut(Easing.ease),
     };
+
+    const content_zIndex_config = {
+      duration: 200,
+      toValue: 0,
+      useNativeDriver: true,
+      easing: Easing.inOut(Easing.ease),
+    };
     // run animation
     timing(input_box_translate_x, input_box_translate_x_config).start();
     timing(back_button_opacity, back_button_opacity_config).start();
     timing(content_translate_y, content_translate_y_config).start();
+    // timing(content_zIndex, content_zIndex_config).start();
     timing(content_opacity, content_opacity_config).start();
 
     // force blur
     input.current.blur();
+  };
+
+  const changeKeyword = value => {
+    onChangeKeyword(value);
+    // const content_zIndex_config = {
+    //   duration: 200,
+    //   toValue: 0,
+    //   useNativeDriver: true,
+    //   easing: Easing.inOut(Easing.ease),
+    // };
+    // timing(content_zIndex, content_zIndex_config).start();
   };
 
   return (
@@ -165,7 +184,7 @@ const SearchBar = () => {
                 placeholder="Search"
                 clearButtonMode="always"
                 value={keyword}
-                onChangeText={onChangeKeyword}
+                onChangeText={changeKeyword}
                 style={styles.input}
               />
             </Animated.View>
@@ -183,74 +202,74 @@ const SearchBar = () => {
           styles.content,
           {
             opacity: content_opacity,
-            zIndex: content_zIndex,
+            // zIndex: content_zIndex,
             transform: [{translateY: content_translate_y}],
           },
         ]}>
         <SafeAreaView style={styles.content_safe_area}>
           <View style={styles.content_inner}>
-            <View style={styles.separator}>
-              {keyword === '' ? (
-                <View style={styles.image_placeholder_container}>
-                  <Image
-                    style={styles.image_placeholder}
-                    //source={{uri: 'https://reactnative.dev/img/tiny_logo.png'}}
+            <View style={styles.separator} />
+            {keyword === '' ? (
+              <View style={styles.image_placeholder_container}>
+                <Image
+                  style={styles.image_placeholder}
+                  source={{uri: 'https://reactnative.dev/img/tiny_logo.png'}}
+                />
+                <Text style={styles.image_placeholder_text}>
+                  Enter words to search
+                </Text>
+              </View>
+            ) : (
+              <ScrollView>
+                <View style={styles.search_item}>
+                  <Icon
+                    style={styles.item_icon}
+                    name="search"
+                    size={16}
+                    color="#cccccc"
                   />
-                  <Text style={styles.image_placeholder_text}>
-                    Enter words to search
-                  </Text>
+                  <Text style={styles.fake_result}> Fake result 1</Text>
                 </View>
-              ) : (
-                <ScrollView>
-                  <View style={styles.search_item}>
-                    <Icon
-                      style={styles.item_icon}
-                      name="search"
-                      size={16}
-                      color="#cccccc"
-                    />
-                    <Text> Fake result 1</Text>
-                  </View>
-                  <View style={styles.search_item}>
-                    <Icon
-                      style={styles.item_icon}
-                      name="search"
-                      size={16}
-                      color="#cccccc"
-                    />
-                    <Text> Fake result 2</Text>
-                  </View>
-                  <View style={styles.search_item}>
-                    <Icon
-                      style={styles.item_icon}
-                      name="search"
-                      size={16}
-                      color="#cccccc"
-                    />
-                    <Text> Fake result 3</Text>
-                  </View>
-                  <View style={styles.search_item}>
-                    <Icon
-                      style={styles.item_icon}
-                      name="search"
-                      size={16}
-                      color="#cccccc"
-                    />
-                    <Text> Fake result 4</Text>
-                  </View>
-                  <View style={styles.search_item}>
-                    <Icon
-                      style={styles.item_icon}
-                      name="search"
-                      size={16}
-                      color="#cccccc"
-                    />
-                    <Text> Fake result 5</Text>
-                  </View>
-                </ScrollView>
-              )}
-            </View>
+                <View style={styles.search_item}>
+                  <Icon
+                    style={styles.item_icon}
+                    name="search"
+                    size={16}
+                    color="#cccccc"
+                  />
+                  <Text style={styles.fake_result}> Fake result 2</Text>
+                </View>
+                <View style={styles.search_item}>
+                  <Icon
+                    style={styles.item_icon}
+                    name="search"
+                    size={16}
+                    color="#cccccc"
+                  />
+                  <Text style={styles.fake_result}> Fake result 3</Text>
+                </View>
+                <View style={styles.search_item}>
+                  <Icon
+                    style={styles.item_icon}
+                    name="search"
+                    size={16}
+                    color="#cccccc"
+                  />
+                  <Text style={styles.fake_result}> Fake result 4</Text>
+                </View>
+                <View style={styles.search_item}>
+                  <Icon
+                    style={styles.item_icon}
+                    name="search"
+                    size={16}
+                    color="#cccccc"
+                  />
+                  <Text style={styles.fake_result}> Fake result 5</Text>
+                </View>
+              </ScrollView>
+            )}
           </View>
+          {/* </View> */}
         </SafeAreaView>
       </Animated.View>
     </>

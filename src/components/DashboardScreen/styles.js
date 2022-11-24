@@ -3,7 +3,7 @@ import {StyleSheet, useColorScheme} from 'react-native';
 const Styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginLeft: -10,
+    paddingHorizontal: 16,
   },
   text: {
     fontSize: 20,
